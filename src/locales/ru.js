@@ -1,5 +1,7 @@
 export default {
   translation: {
+    currencyRates: 'Курсы валют',
+    currencyConverter: 'Конвертер валют',
     currencyNames: {
       AED: 'Дирхам (ОАЭ)',
       AFN: 'Афганский Афгани',
