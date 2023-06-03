@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   baseCurrency: 'RUB',
+  rates: [],
 };
 
 const currenciesReducer = createSlice({
@@ -12,8 +13,11 @@ const currenciesReducer = createSlice({
     setCurrencies(state, { payload }) {
       state.rates = Object.entries(payload);
     },
+    setBaseCurrency(state, { payload }) {
+      state.baseCurrency = payload;
+    },
   },
 });
 
-export const { setCurrencies } = currenciesReducer.actions;
+export const { setCurrencies, setBaseCurrency } = currenciesReducer.actions;
 export default currenciesReducer.reducer;
