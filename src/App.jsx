@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import './App.css';
 import React from 'react';
 import {
   BrowserRouter,
@@ -198,16 +199,16 @@ const App = () => {
   };
   dispatch(setCurrencies(rates));
   return (
-  <div className="d-flex flex-column h-100">
-    <BrowserRouter>
-      <Navigation />
-      <Routes>
-        <Route path="/currencyConverter" element={<CurrencyConverter />} />
-        <Route path="/" element={<CurrencyRate />} />
-      </Routes>
-    </BrowserRouter>
-  </div>
-);
+    <div className="d-flex flex-column h-100">
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route path="/currencyConverter" element={<CurrencyConverter />} />
+          <Route path="/" element={<CurrencyRate />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default App;

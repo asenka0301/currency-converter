@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+
+.button-container {
+    background-color: #fff;
+}
+
+.arrow-button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: #fff;
+    background-image: url('./images/left-right.png');
+    background-size: cover;
+}
+
+  .currency-option {
+    display: flex;
+    align-items: center;
+  }
+  
+  .currency-flag {
+    width: 20px;
+    margin: 0 10px;
+    border: 1px solid var(--light-border);
+  }
