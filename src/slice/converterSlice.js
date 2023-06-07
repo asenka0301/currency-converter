@@ -14,8 +14,14 @@ const converterReducer = createSlice({
     setRate(state, { payload }) {
       state.rate = payload;
     },
+    setCurrencyHave(state, { payload }) {
+      state.currencyHave = payload;
+    },
+    setCurrencyBuy(state, { payload }) {
+      state.currencyBuy = payload;
+    },
   },
 });
 
-export const { setRate } = converterReducer.actions;
+export const { setRate, setCurrencyHave, setCurrencyBuy } = converterReducer.actions;
 export default converterReducer.reducer;

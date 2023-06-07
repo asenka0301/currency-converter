@@ -5,6 +5,7 @@ import { Container, Card } from 'react-bootstrap';
 import CurrencyConverterSelect from './CurrencyConverterSelect';
 import ConverterInputToSell from './ConverterInputToSell';
 import ConverterInputToBuy from './ConvertInputToBuy';
+import CurrencySwitchButton from './CurrencySwitchButton';
 // import { setRate } from '../slice/converterSlice';
 
 const CurrencyConverter = () => {
@@ -43,9 +44,7 @@ const CurrencyConverter = () => {
         />
         <CurrencyConverterSelect currency={soldCurrency} />
       </Card>
-      <div className="button-container">
-        <button type="button" aria-label="Save" className="arrow-button mx-3" />
-      </div>
+      <CurrencySwitchButton soldCurrency={soldCurrency} purchasedCurrency={purchasedCurrency} />
       <Card className="p-5 w-100">
         <h4 className="font-weight-bold">Хочу купить</h4>
         <ConverterInputToBuy sumToSell={sumToSell} setSumToBuy={setSumToBuy} />
