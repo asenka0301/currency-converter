@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import axios from 'axios';
 import { Container, Card } from 'react-bootstrap';
 // import { useSelector, useDispatch } from 'react-redux';
@@ -8,6 +8,8 @@ import ConverterInputToBuy from './ConvertInputToBuy';
 // import { setRate } from '../slice/converterSlice';
 
 const CurrencyConverter = () => {
+  const [sumToSell, setSumToSell] = useState('');
+  const [sumToBuy, setSumToBuy] = useState('');
   // const dispatch = useDispatch();
   // const soldCurrency = useSelector((state) => {
   //   const { currencyHave } = state.converterReducer;
@@ -35,7 +37,10 @@ const CurrencyConverter = () => {
     <Container className="mt-5 d-flex justify-content-center align-items-center">
       <Card className="w-100 p-5">
         <h4 className="font-weight-bold">У меня есть</h4>
-        <ConverterInputToSell />
+        <ConverterInputToSell
+          setSumToSell={setSumToSell}
+          sumToBuy={sumToBuy}
+        />
         <CurrencyConverterSelect currency={soldCurrency} />
       </Card>
       <div className="button-container">
@@ -43,7 +48,7 @@ const CurrencyConverter = () => {
       </div>
       <Card className="p-5 w-100">
         <h4 className="font-weight-bold">Хочу купить</h4>
-        <ConverterInputToBuy />
+        <ConverterInputToBuy sumToSell={sumToSell} setSumToBuy={setSumToBuy} />
         <CurrencyConverterSelect currency={purchasedCurrency} />
       </Card>
     </Container>

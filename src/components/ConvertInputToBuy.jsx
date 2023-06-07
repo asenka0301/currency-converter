@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import { Form, FloatingLabel } from 'react-bootstrap';
 
-const ConverterInputToSell = () => {
-  const [inputValue, setInputValue] = useState('');
+const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
+  const [inputToBuyValue, setInputToBuyValue] = useState('');
+
   const soldCurrency = 'USD';
   const rate = ['RUB', 80.80369];
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
+  const countToBuySum = (value) => {
+    if (value) {
+      const currencyRate = Number((rate[1]).toFixed(2));
+      return (Number(value) / currencyRate).toFixed(2);
+    }
+    return '';
   };
 
-  const label = `1 ${rate[0]} = ${(1 / rate[1]).toFixed(3)} ${soldCurrency}`;
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputToBuyValue(newValue);
+    setSumToBuy(countToBuySum(newValue));
+  };
+
+  const label = `1 ${rate[0]} = ${(1 / rate[1]).toFixed(2)} ${soldCurrency}`;
 
   return (
     <Form.Group className="form-floating mb-3 mt-2">
@@ -18,7 +29,7 @@ const ConverterInputToSell = () => {
         label={label}
       >
         <Form.Control
-          value={inputValue}
+          value={inputToBuyValue || sumToSell}
           onChange={handleChange}
           placeholder={soldCurrency}
         />
