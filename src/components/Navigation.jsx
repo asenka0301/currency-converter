@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Navbar,
@@ -18,15 +18,13 @@ const Navigation = () => {
         </Navbar.Brand>
         <Nav
           variant="tabs"
-          defaultActiveKey="/"
           className="w-100 me-auto my-2 my-lg-0"
-          style={{ maxHeight: '100px' }}
         >
           <Nav.Item>
-            <Nav.Link href="/">{t('currencyRates')}</Nav.Link>
+            <Nav.Link as={NavLink} to="/">{t('currencyRates')}</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="/currencyConverter" as={Link} to="/currencyConverter">{t('currencyConverter')}</Nav.Link>
+            <Nav.Link as={NavLink} to="/currencyConverter">{t('currencyConverter')}</Nav.Link>
           </Nav.Item>
         </Nav>
       </Container>
