@@ -32,7 +32,7 @@ const CurrencyConverter = () => {
   //     }
   //   };
   //   fetchContent();
-  // }, []);
+  // }, [soldCurrency, purchasedCurrency]);
 
   return (
     <Container className="mt-5 d-flex justify-content-center align-items-center">
@@ -42,13 +42,21 @@ const CurrencyConverter = () => {
           setSumToSell={setSumToSell}
           sumToBuy={sumToBuy}
         />
-        <CurrencyConverterSelect currency={soldCurrency} />
+        <CurrencyConverterSelect
+          defaultCurrency={soldCurrency}
+          disabledCurrency={purchasedCurrency}
+          selectId="soldCurrency"
+        />
       </Card>
       <CurrencySwitchButton soldCurrency={soldCurrency} purchasedCurrency={purchasedCurrency} />
       <Card className="p-5 w-100">
         <h4 className="font-weight-bold">Хочу купить</h4>
         <ConverterInputToBuy sumToSell={sumToSell} setSumToBuy={setSumToBuy} />
-        <CurrencyConverterSelect currency={purchasedCurrency} />
+        <CurrencyConverterSelect
+          defaultCurrency={purchasedCurrency}
+          disabledCurrency={soldCurrency}
+          selectId="purchasedCurrency"
+        />
       </Card>
     </Container>
   );

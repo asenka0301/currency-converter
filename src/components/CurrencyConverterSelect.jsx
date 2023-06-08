@@ -1,12 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/function-component-definition */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Select, { components } from 'react-select';
 // import axios from 'axios';
-// import { setCurrencies, setBaseCurrency } from '../slice/currencySlice';
+import { setCurrencyHave, setCurrencyBuy } from '../slice/converterSlice';
 import EuFlag from '../images/EU-flag.png';
 import NoFlag from '../images/no-image.png';
 import SelectCustomOption from './SelectCustomOption';
@@ -18,9 +18,10 @@ export const CustomComponent = (Comp) => (props) => (
 );
 
 const CurrencyConverterSelect = (props) => {
-  // const dispatch = useDispatch();
+  const inputRef = useRef();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { currency } = props;
+  const { defaultCurrency, disabledCurrency, selectId } = props;
 
   const currenciesRate = useSelector((state) => {
     const { rates } = state.currenciesReducer;
@@ -47,23 +48,29 @@ const CurrencyConverterSelect = (props) => {
     return options;
   };
 
-  // const [currentCountry, setCurrentCountry] = useState(base);
-
-  // const handleChange = (newValue) => {
-  //   setCurrentCountry(newValue);
-  //   // dispatch(setBaseCurrency(e.target.value));
-  //   // const { data } = await axios.get(`https://api.apilayer.com/fixer/latest&base=${e.target.value}&symbols`, { headers: { apikey: 'KTTErBwsDgDidqd57G7iIQpHOQJ7qnTQ' } });
-  //   // dispatch(setCurrencies(data.rates));
-  // };
+  const handleChange = async (e) => {
+    const newValue = e.value;
+    const { id } = inputRef.current.props;
+    if (id === 'soldCurrency') {
+      dispatch(setCurrencyHave(newValue));
+    } else {
+      dispatch(setCurrencyBuy(newValue));
+    }
+  };
 
   return (
     <Select
       options={generateOption(currenciesRate)}
-      defaultValue={generateOption(currenciesRate).find((item) => item.value === currency)}
+      defaultValue={generateOption(currenciesRate).find((item) => item.value === defaultCurrency)}
       components={{
         Option: CustomComponent(components.Option),
         SingleValue: CustomComponent(components.SingleValue),
       }}
+      className="mt-2"
+      isOptionDisabled={(option) => option.value === disabledCurrency}
+      onChange={handleChange}
+      ref={inputRef}
+      id={selectId}
     />
   );
 };
