@@ -8,6 +8,7 @@ import {
   Route,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+// import CurrencyService from './API/CurrencyService';
 import { setCurrencies } from './slice/currencySlice';
 import Navigation from './components/Navigation';
 import CurrencyConverter from './components/CurrencyConverter';
@@ -17,7 +18,7 @@ const App = () => {
   const dispatch = useDispatch();
   // useEffect(() => {
   //   const fetchContent = async () => {
-  //     const response = await axios.get(`https://api.apilayer.com/fixer/latest&base=${base}&symbols`, { headers: { apikey: 'KTTErBwsDgDidqd57G7iIQpHOQJ7qnTQ' } });
+  //     const response = await CurrencyService.getRates(base);
   //     if (response.status === 200) {
   //       const { rates } = response.data;
   //       dispatch(setCurrencies(rates));
