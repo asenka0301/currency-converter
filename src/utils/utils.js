@@ -1,15 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import EuFlag from '../images/EU-flag.png';
-import NoFlag from '../images/no-image.png';
 
 export const getFlags = (code) => {
-  if (code === 'EU') {
-    return EuFlag;
+  if (code === 'ANG') {
+    return 'nl';
   }
-  if (['XA', 'XC', 'XD', 'XO', 'XP'].includes(code)) {
-    return NoFlag;
+  if (['XAF', 'XAG', 'XAU', 'XCD', 'XDR', 'XOF', 'XPF', 'BTC'].includes(code)) {
+    return 'xx';
   }
-  return `https://flagsapi.com/${code}/flat/64.png`;
+  return code.toLowerCase().slice(0, 2);
 };
 
 export const generateOption = (rates) => {
@@ -17,8 +15,7 @@ export const generateOption = (rates) => {
   const options = rates.map(([code]) => {
     const value = code;
     const label = t(`currencyNames.${value}`);
-    const flag = getFlags(code.slice(0, 2));
-    return { value, label, flag };
+    return { value, label };
   });
   return options;
 };

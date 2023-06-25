@@ -1,11 +1,12 @@
 import React from 'react';
+import { getFlags } from '../utils/utils';
 
 const SelectCustomOption = (props) => {
-  const { value, label, flag } = props;
+  const { value, label } = props;
 
   return (
-    <div className="d-flex alihn-items-center">
-      {value ? <img className="currency-flag" src={flag} alt="flag" /> : null}
+    <div className="d-flex align-items-center">
+      {value ? <span className={`fi fi-select fi-${getFlags(value)}`} /> : null}
       {label ?? ''}
     </div>
   );
