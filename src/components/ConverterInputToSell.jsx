@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Form, FloatingLabel } from 'react-bootstrap';
 
 const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
   const [inputToSellValue, setInputToSellValue] = useState('');
-  const soldCurrency = 'USD';
-  const rate = ['RUB', 80.80369];
+
+  useEffect(() => {
+    setInputToSellValue(sumToBuy);
+  }, [sumToBuy]);
+
+  const soldCurrency = useSelector((state) => {
+    const { currencyHave } = state.converterReducer;
+    return currencyHave;
+  });
+
+  const currentRate = useSelector((state) => {
+    const { rate } = state.converterReducer;
+    return rate;
+  });
 
   const countToSellSum = (value) => {
     if (value) {
-      const currencyRate = Number((rate[1]).toFixed(2));
+      const currencyRate = Number((currentRate[1]).toFixed(2));
       return +(Number(value) * currencyRate).toFixed(2);
     }
     return '';
@@ -20,15 +33,15 @@ const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
     setSumToSell(countToSellSum(newValue));
   };
 
-  const label = `1 ${soldCurrency} = ${(rate[1]).toFixed(2)} ${rate[0]}`;
+  const getLabel = (currencyToSell, currencyToBuyInfo) => `1 ${currencyToSell} = ${(currencyToBuyInfo[1]).toFixed(2)} ${currencyToBuyInfo[0]}`;
 
   return (
     <Form.Group className="form-floating mb-3 mt-2">
       <FloatingLabel
-        label={label}
+        label={currentRate.length && getLabel(soldCurrency, currentRate)}
       >
         <Form.Control
-          value={sumToBuy || inputToSellValue}
+          value={inputToSellValue}
           onChange={handleChange}
           placeholder={soldCurrency}
         />

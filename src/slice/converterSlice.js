@@ -12,7 +12,7 @@ const converterReducer = createSlice({
   initialState,
   reducers: {
     setRate(state, { payload }) {
-      state.rate = payload;
+      state.rate = Object.entries(payload).flat();
     },
     setCurrencyHave(state, { payload }) {
       state.currencyHave = payload;

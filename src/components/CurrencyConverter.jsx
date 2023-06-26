@@ -1,38 +1,39 @@
-import React, { useState } from 'react';
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CurrencyConverterSelect from './CurrencyConverterSelect';
 import ConverterInputToSell from './ConverterInputToSell';
 import ConverterInputToBuy from './ConvertInputToBuy';
 import CurrencySwitchButton from './CurrencySwitchButton';
-// import { setRate } from '../slice/converterSlice';
+import CurrencyService from '../API/CurrencyService';
+import { setRate } from '../slice/converterSlice';
 
 const CurrencyConverter = () => {
   const [sumToSell, setSumToSell] = useState('');
   const [sumToBuy, setSumToBuy] = useState('');
-  // const dispatch = useDispatch();
-  // const soldCurrency = useSelector((state) => {
-  //   const { currencyHave } = state.converterReducer;
-  //   return currencyHave;
-  // });
-  const soldCurrency = 'USD';
-  // const purchasedCurrency = useSelector((state) => {
-  //   const { currencyBuy } = state.converterReducer;
-  //   return currencyBuy;
-  // });
-  const purchasedCurrency = 'RUB';
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const fetchContent = async () => {
-  //     const response = await axios.get(`https://api.apilayer.com/exchangerates_data/latest?symbols=${purchasedCurrency}&base=${soldCurrency}`, { headers: { apikey: 'KTTErBwsDgDidqd57G7iIQpHOQJ7qnTQ' } });
-  //     if (response.status === 200) {
-  //       const { rates } = response.data;
-  //       dispatch(setRate(rates));
-  //     }
-  //   };
-  //   fetchContent();
-  // }, [soldCurrency, purchasedCurrency]);
+  const soldCurrency = useSelector((state) => {
+    const { currencyHave } = state.converterReducer;
+    return currencyHave;
+  });
+
+  const purchasedCurrency = useSelector((state) => {
+    const { currencyBuy } = state.converterReducer;
+    return currencyBuy;
+  });
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      const response = await CurrencyService.getRate(soldCurrency, purchasedCurrency);
+      console.log(response);
+      if (response.status === 200) {
+        const { rates } = response.data;
+        dispatch(setRate(rates));
+      }
+    };
+    fetchContent();
+  }, []);
 
   return (
     <Container className="mt-5 d-flex justify-content-center align-items-center">

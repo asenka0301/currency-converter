@@ -15,7 +15,7 @@ const CurrencyConverterSelect = (props) => {
     return rates;
   });
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const newValue = e.value;
     const { id } = inputRef.current.props;
     if (id === 'soldCurrency') {
@@ -27,8 +27,11 @@ const CurrencyConverterSelect = (props) => {
 
   return (
     <Select
-      options={generateOption(currenciesRate)}
-      defaultValue={generateOption(currenciesRate).find((item) => item.value === defaultCurrency)}
+      options={currenciesRate && generateOption(currenciesRate)}
+      defaultValue={
+        currenciesRate
+        && generateOption(currenciesRate).find((item) => item.value === defaultCurrency)
+      }
       components={{
         Option: CustomComponent(components.Option),
         SingleValue: CustomComponent(components.SingleValue),
