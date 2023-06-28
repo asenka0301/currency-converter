@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import CurrencyConverterSelect from './CurrencyConverterSelect';
+import SelectToSell from './SelectToSell';
+import SelectToBuy from './SelectToBuy';
 import ConverterInputToSell from './ConverterInputToSell';
 import ConverterInputToBuy from './ConvertInputToBuy';
 import CurrencySwitchButton from './CurrencySwitchButton';
@@ -22,11 +23,12 @@ const CurrencyConverter = () => {
     const { currencyBuy } = state.converterReducer;
     return currencyBuy;
   });
+  const [selectToSell, setSelectToSell] = useState(soldCurrency);
+  const [selectToBuy, setSelectToBuy] = useState(purchasedCurrency);
 
   useEffect(() => {
     const fetchContent = async () => {
       const response = await CurrencyService.getRate(soldCurrency, purchasedCurrency);
-      console.log(response);
       if (response.status === 200) {
         const { rates } = response.data;
         dispatch(setRate(rates));
@@ -43,21 +45,18 @@ const CurrencyConverter = () => {
           setSumToSell={setSumToSell}
           sumToBuy={sumToBuy}
         />
-        <CurrencyConverterSelect
-          defaultCurrency={soldCurrency}
-          disabledCurrency={purchasedCurrency}
-          selectId="soldCurrency"
-        />
+        <SelectToSell selectToSell={selectToSell} setSelectToSell={setSelectToSell} />
       </Card>
-      <CurrencySwitchButton soldCurrency={soldCurrency} purchasedCurrency={purchasedCurrency} />
+      <CurrencySwitchButton
+        selectToSell={selectToSell}
+        setSelectToSell={setSelectToSell}
+        selectToBuy={selectToBuy}
+        setSelectToBuy={setSelectToBuy}
+      />
       <Card className="p-5 w-100">
         <h4 className="font-weight-bold">Хочу купить</h4>
         <ConverterInputToBuy sumToSell={sumToSell} setSumToBuy={setSumToBuy} />
-        <CurrencyConverterSelect
-          defaultCurrency={purchasedCurrency}
-          disabledCurrency={soldCurrency}
-          selectId="purchasedCurrency"
-        />
+        <SelectToBuy selectToBuy={selectToBuy} setSelectToBuy={setSelectToBuy} />
       </Card>
     </Container>
   );

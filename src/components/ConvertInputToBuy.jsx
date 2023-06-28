@@ -5,10 +5,6 @@ import { Form, FloatingLabel } from 'react-bootstrap';
 const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
   const [inputToBuyValue, setInputToBuyValue] = useState('');
 
-  useEffect(() => {
-    setInputToBuyValue(sumToSell);
-  }, [sumToSell]);
-
   const soldCurrency = useSelector((state) => {
     const { currencyHave } = state.converterReducer;
     return currencyHave;
@@ -19,9 +15,13 @@ const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
     return rate;
   });
 
+  useEffect(() => {
+    setInputToBuyValue(sumToSell);
+  }, [sumToSell, currentRate]);
+
   const countToBuySum = (value) => {
     if (value) {
-      const currencyRate = Number((currentRate[1]).toFixed(2));
+      const currencyRate = Number((currentRate[1]));
       return (Number(value) / currencyRate).toFixed(2);
     }
     return '';
@@ -33,7 +33,7 @@ const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
     setSumToBuy(countToBuySum(newValue));
   };
 
-  const getLabel = (currencyToSell, currencyToBuyInfo) => `1 ${currencyToBuyInfo[0]} = ${(1 / currencyToBuyInfo[1]).toFixed(2)} ${currencyToSell}`;
+  const getLabel = (currencyToSell, currencyToBuyInfo) => `1 ${currencyToBuyInfo[0]} = ${(1 / currencyToBuyInfo[1]).toFixed(3)} ${currencyToSell}`;
 
   return (
     <Form.Group className="form-floating mb-3 mt-2">

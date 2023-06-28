@@ -5,10 +5,6 @@ import { Form, FloatingLabel } from 'react-bootstrap';
 const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
   const [inputToSellValue, setInputToSellValue] = useState('');
 
-  useEffect(() => {
-    setInputToSellValue(sumToBuy);
-  }, [sumToBuy]);
-
   const soldCurrency = useSelector((state) => {
     const { currencyHave } = state.converterReducer;
     return currencyHave;
@@ -19,9 +15,13 @@ const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
     return rate;
   });
 
+  useEffect(() => {
+    setInputToSellValue(sumToBuy);
+  }, [sumToBuy, currentRate]);
+
   const countToSellSum = (value) => {
     if (value) {
-      const currencyRate = Number((currentRate[1]).toFixed(2));
+      const currencyRate = Number(currentRate[1]);
       return +(Number(value) * currencyRate).toFixed(2);
     }
     return '';

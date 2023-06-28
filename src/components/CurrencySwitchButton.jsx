@@ -1,20 +1,31 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-// import axios from 'axios';
-import { setCurrencyHave, setCurrencyBuy } from '../slice/converterSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrencyHave, setCurrencyBuy, setRate } from '../slice/converterSlice';
 
-const CurrencySwitchButton = ({ soldCurrency, purchasedCurrency }) => {
+const CurrencySwitchButton = (props) => {
+  const {
+    selectToSell,
+    setSelectToSell,
+    selectToBuy,
+    setSelectToBuy,
+  } = props;
+
   const dispatch = useDispatch();
-  const handleClick = async () => {
-    const newSoldCurrency = purchasedCurrency;
-    const newPurchasedCurrency = soldCurrency;
-    dispatch(setCurrencyHave(newSoldCurrency));
+
+  const currentRate = useSelector((state) => {
+    const { rate } = state.converterReducer;
+    return rate;
+  });
+
+  const handleClick = () => {
+    const newSoldCurrency = selectToBuy;
+    const newPurchasedCurrency = selectToSell;
+    const newRate = Number((1 / currentRate[1]).toFixed(6));
+    setSelectToSell(newSoldCurrency);
+    setSelectToBuy(newPurchasedCurrency);
     dispatch(setCurrencyBuy(newPurchasedCurrency));
-    // const response = await axios.get(`https://api.apilayer.com/exchangerates_data/latest?symbols=${newPurchasedCurrency}&base=${newSoldCurrency}`, { headers: { apikey: 'KTTErBwsDgDidqd57G7iIQpHOQJ7qnTQ' } });
-    // if (response.status === 200) {
-    //   const { rates } = response.data;
-    //   dispatch(setRate(rates));
-    // }
+    dispatch(setCurrencyHave(newSoldCurrency));
+    dispatch(setRate({ [newPurchasedCurrency]: newRate }));
   };
 
   return (
