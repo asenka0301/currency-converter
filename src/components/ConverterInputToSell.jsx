@@ -33,7 +33,7 @@ const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
     setSumToSell(countToSellSum(newValue));
   };
 
-  const getLabel = (currencyToSell, currencyToBuyInfo) => `1 ${currencyToSell} = ${(currencyToBuyInfo[1]).toFixed(2)} ${currencyToBuyInfo[0]}`;
+  const getLabel = (currencyToSell, currencyToBuyInfo) => `1 ${currencyToSell} = ${(currencyToBuyInfo[1]).toFixed(3)} ${currencyToBuyInfo[0]}`;
 
   return (
     <Form.Group className="form-floating mb-3 mt-2">
