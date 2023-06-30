@@ -28,7 +28,8 @@ const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
   };
 
   const handleChange = (e) => {
-    const newValue = e.target.value;
+    const regex = /^\d+$/;
+    const newValue = (e.target.value).match(regex);
     setInputToBuyValue(newValue);
     setSumToBuy(countToBuySum(newValue));
   };
@@ -41,6 +42,7 @@ const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
         label={currentRate.length && getLabel(soldCurrency, currentRate)}
       >
         <Form.Control
+          type="number"
           value={inputToBuyValue}
           onChange={handleChange}
           placeholder={soldCurrency}
