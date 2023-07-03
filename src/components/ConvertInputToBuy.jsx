@@ -22,14 +22,13 @@ const ConverterInputToSell = ({ sumToSell, setSumToBuy }) => {
   const countToBuySum = (value) => {
     if (value) {
       const currencyRate = Number((currentRate[1]));
-      return (Number(value) / currencyRate).toFixed(2);
+      return +(Number(value) / currencyRate).toFixed(2);
     }
     return '';
   };
 
   const handleChange = (e) => {
-    const regex = /^\d+$/;
-    const newValue = (e.target.value).match(regex);
+    const newValue = (e.target.value).replace(/[^0-9.]/g, '');
     setInputToBuyValue(newValue);
     setSumToBuy(countToBuySum(newValue));
   };

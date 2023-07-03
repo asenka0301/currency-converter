@@ -28,8 +28,7 @@ const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
   };
 
   const handleChange = (e) => {
-    const regex = /^\d+$/;
-    const newValue = (e.target.value).match(regex);
+    const newValue = (e.target.value).replace(/[^0-9.]/g, '');
     setInputToSellValue(newValue);
     setSumToSell(countToSellSum(newValue));
   };
