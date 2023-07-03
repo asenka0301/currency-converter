@@ -6,7 +6,7 @@ const SelectCustomOption = (props) => {
 
   return (
     <div className="d-flex align-items-center">
-      {value ? <span className={`fi fi-select fi-${getFlags(value)}`} /> : null}
+      {value ? <span className={`fi fi-${getFlags(value)}`} /> : null}
       {label ?? ''}
     </div>
   );
