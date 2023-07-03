@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Select, { components } from 'react-select';
 import { setBaseCurrency } from '../slice/currencySlice';
 import CustomComponent from './CustomComponent';
-import { generateOption } from '../utils/utils';
+import { generateOption, getValue } from '../utils/utils';
 
 const BaseCurrencySelect = () => {
   const dispatch = useDispatch();
@@ -16,16 +16,20 @@ const BaseCurrencySelect = () => {
     return rates;
   });
 
+  const base = useSelector((state) => {
+    const { baseCurrency } = state.currenciesReducer;
+    return baseCurrency;
+  });
+
   const handleChange = async (e) => {
     const newValue = e.value;
-    console.log(newValue);
     dispatch(setBaseCurrency(newValue));
   };
 
   return (
     <Select
       options={generateOption(currenciesRate)}
-      defaultValue={{ value: 'RUB', label: 'Российский рубль' }}
+      value={currenciesRate && getValue(currenciesRate, base)}
       components={{
         Option: CustomComponent(components.Option),
         SingleValue: CustomComponent(components.SingleValue),

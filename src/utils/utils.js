@@ -19,3 +19,7 @@ export const generateOption = (rates) => {
   });
   return options;
 };
+
+export const getValue = (rate, currency) => (
+  generateOption(rate).find((item) => item.value === currency)
+);

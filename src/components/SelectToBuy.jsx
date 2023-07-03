@@ -4,7 +4,7 @@ import Select, { components } from 'react-select';
 import { setCurrencyBuy, setRate } from '../slice/converterSlice';
 import CustomComponent from './CustomComponent';
 import CurrencyService from '../API/CurrencyService';
-import { generateOption } from '../utils/utils';
+import { generateOption, getValue } from '../utils/utils';
 
 const SelectToBuy = ({ selectToBuy, setSelectToBuy }) => {
   const dispatch = useDispatch();
@@ -29,10 +29,6 @@ const SelectToBuy = ({ selectToBuy, setSelectToBuy }) => {
       dispatch(setRate(rates));
     }
   };
-
-  const getValue = (rate, currency) => (
-    generateOption(rate).find((item) => item.value === currency)
-  );
 
   return (
     <Select
