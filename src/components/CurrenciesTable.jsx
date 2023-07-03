@@ -16,9 +16,9 @@ const CurrenciesTable = () => {
     <Table bordered hover className="mt-4 mb-4">
       <thead align="center">
         <tr>
-          <th>Код</th>
-          <th>Валюта</th>
-          <th>Курс</th>
+          <th>{t('code')}</th>
+          <th>{t('currency')}</th>
+          <th>{t('rate')}</th>
         </tr>
       </thead>
       <tbody align="center">

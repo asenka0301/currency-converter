@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Loader from '../Loader';
 import SelectToSell from '../SelectToSell';
 import SelectToBuy from '../SelectToBuy';
@@ -9,9 +10,11 @@ import ConverterInputToBuy from '../ConvertInputToBuy';
 import CurrencySwitchButton from '../CurrencySwitchButton';
 import CurrencyService from '../../API/CurrencyService';
 import { setRate } from '../../slice/converterSlice';
+import useLoad from '../../hooks';
 
 const CurrencyConverter = () => {
-  const [loading, setLoading] = useState(false);
+  const load = useLoad();
+  const { t } = useTranslation();
   const [sumToSell, setSumToSell] = useState('');
   const [sumToBuy, setSumToBuy] = useState('');
   const dispatch = useDispatch();
@@ -25,29 +28,36 @@ const CurrencyConverter = () => {
     const { currencyBuy } = state.converterReducer;
     return currencyBuy;
   });
+
+  const currentRate = useSelector((state) => {
+    const { rate } = state.converterReducer;
+    return rate;
+  });
+
   const [selectToSell, setSelectToSell] = useState(soldCurrency);
   const [selectToBuy, setSelectToBuy] = useState(purchasedCurrency);
 
   useEffect(() => {
+    if (currentRate.length > 0) return;
     const fetchContent = async () => {
-      setLoading(true);
+      load.setLoading(true);
       const response = await CurrencyService.getRate(soldCurrency, purchasedCurrency);
       if (response.status === 200) {
         const { rates } = response.data;
         dispatch(setRate(rates));
-        setLoading(false);
       }
+      load.setLoading(false);
     };
     fetchContent();
   }, []);
 
   return (
-    <Container className="mt-5 d-flex justify-content-center align-items-center">
-      {loading ? <Loader />
+    <Container className="converter d-flex justify-content-center align-items-center">
+      {load.loading ? <Loader />
         : (
           <>
             <Card className="w-100 p-5">
-              <h4 className="font-weight-bold">У меня есть</h4>
+              <h4 className="font-weight-bold">{t('have')}</h4>
               <ConverterInputToSell
                 setSumToSell={setSumToSell}
                 sumToBuy={sumToBuy}
@@ -61,7 +71,7 @@ const CurrencyConverter = () => {
               setSelectToBuy={setSelectToBuy}
             />
             <Card className="p-5 w-100">
-              <h4 className="font-weight-bold">Хочу купить</h4>
+              <h4 className="font-weight-bold">{t('buy')}</h4>
               <ConverterInputToBuy sumToSell={sumToSell} setSumToBuy={setSumToBuy} />
               <SelectToBuy selectToBuy={selectToBuy} setSelectToBuy={setSelectToBuy} />
             </Card>
