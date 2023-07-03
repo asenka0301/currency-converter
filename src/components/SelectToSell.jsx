@@ -6,7 +6,12 @@ import CustomComponent from './CustomComponent';
 import CurrencyService from '../API/CurrencyService';
 import { generateOption, getValue } from '../utils/utils';
 
-const SelectToSell = ({ selectToSell, setSelectToSell }) => {
+const SelectToSell = ({
+  selectToSell,
+  setSelectToSell,
+  setSumToSell,
+  setSumToBuy,
+}) => {
   const dispatch = useDispatch();
 
   const currenciesRate = useSelector((state) => {
@@ -27,24 +32,23 @@ const SelectToSell = ({ selectToSell, setSelectToSell }) => {
       setSelectToSell(newValue);
       dispatch(setCurrencyHave(newValue));
       dispatch(setRate(rates));
+      setSumToSell('');
+      setSumToBuy('');
     }
   };
 
   return (
-    currenciesRate
-    && (
-      <Select
-        options={generateOption(currenciesRate)}
-        value={getValue(currenciesRate, selectToSell)}
-        components={{
-          Option: CustomComponent(components.Option),
-          SingleValue: CustomComponent(components.SingleValue),
-        }}
-        className="mt-2"
-        isOptionDisabled={(option) => option.value === purchasedCurrency}
-        onChange={handleChange}
-      />
-    )
+    <Select
+      options={currenciesRate && generateOption(currenciesRate)}
+      value={getValue(currenciesRate, selectToSell)}
+      components={{
+        Option: CustomComponent(components.Option),
+        SingleValue: CustomComponent(components.SingleValue),
+      }}
+      className="mt-2"
+      isOptionDisabled={(option) => option.value === purchasedCurrency}
+      onChange={handleChange}
+    />
   );
 };
 

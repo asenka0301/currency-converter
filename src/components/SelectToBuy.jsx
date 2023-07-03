@@ -6,7 +6,12 @@ import CustomComponent from './CustomComponent';
 import CurrencyService from '../API/CurrencyService';
 import { generateOption, getValue } from '../utils/utils';
 
-const SelectToBuy = ({ selectToBuy, setSelectToBuy }) => {
+const SelectToBuy = ({
+  selectToBuy,
+  setSelectToBuy,
+  setSumToSell,
+  setSumToBuy,
+}) => {
   const dispatch = useDispatch();
 
   const currenciesRate = useSelector((state) => {
@@ -27,6 +32,8 @@ const SelectToBuy = ({ selectToBuy, setSelectToBuy }) => {
       setSelectToBuy(newValue);
       dispatch(setCurrencyBuy(newValue));
       dispatch(setRate(rates));
+      setSumToSell('');
+      setSumToBuy('');
     }
   };
 
