@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Form, FloatingLabel } from 'react-bootstrap';
 
-const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
+const ConverterInputToSell = ({ sumToBuy, setSumToSell, setSumToBuy }) => {
   const [inputToSellValue, setInputToSellValue] = useState('');
 
   const soldCurrency = useSelector((state) => {
@@ -17,7 +17,7 @@ const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
 
   useEffect(() => {
     setInputToSellValue(sumToBuy);
-  }, [sumToBuy, currentRate]);
+  }, [sumToBuy]);
 
   const countToSellSum = (value) => {
     if (value) {
@@ -29,7 +29,8 @@ const ConverterInputToSell = ({ setSumToSell, sumToBuy }) => {
 
   const handleChange = (e) => {
     const newValue = (e.target.value).replace(/[^0-9.]/g, '');
-    setInputToSellValue(newValue);
+    // setInputToSellValue(newValue);
+    setSumToBuy(newValue);
     setSumToSell(countToSellSum(newValue));
   };
 

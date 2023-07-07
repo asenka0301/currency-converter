@@ -59,8 +59,9 @@ const CurrencyConverter = () => {
             <Card className="w-100 p-5">
               <h4 className="font-weight-bold">{t('have')}</h4>
               <ConverterInputToSell
-                setSumToSell={setSumToSell}
                 sumToBuy={sumToBuy}
+                setSumToSell={setSumToSell}
+                setSumToBuy={setSumToBuy}
               />
               <SelectToSell
                 selectToSell={selectToSell}
@@ -77,7 +78,11 @@ const CurrencyConverter = () => {
             />
             <Card className="p-5 w-100">
               <h4 className="font-weight-bold">{t('buy')}</h4>
-              <ConverterInputToBuy sumToSell={sumToSell} setSumToBuy={setSumToBuy} />
+              <ConverterInputToBuy
+                sumToSell={sumToSell}
+                setSumToSell={setSumToSell}
+                setSumToBuy={setSumToBuy}
+              />
               <SelectToBuy
                 selectToBuy={selectToBuy}
                 setSelectToBuy={setSelectToBuy}
