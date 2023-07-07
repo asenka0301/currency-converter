@@ -14,7 +14,12 @@ Used packages:
 ```sh
 $ https://github.com/asenka0301/currency-converter.git
 $ npm ci
-$ npm start
+$ npm run start:backend
+$ npm run start:frontend
 ```
 
 ## UI example
+### Currency rate
+![currencyRate](src/images/exchangeRate.PNG)
+### Currency converter
+![currencyConverter](src/images/currencyConverter.PNG)
