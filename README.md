@@ -13,8 +13,11 @@ Used packages:
 ## Setup
 ```sh
 $ https://github.com/asenka0301/currency-converter.git
+$ cd backend
 $ npm ci
-$ npm run start:backend
+$ npm run serv
+$ cd .. 
+$ npm ci
 $ npm run start:frontend
 ```
 
